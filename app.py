@@ -113,8 +113,8 @@ api.add_resource(FoodResource, "/api/food", "/api/food/<int:food_id>")
 
 @app.route('/')
 def home():
-    return render_template('home.html')
-
+    foods = Food.query.all()
+    return render_template('home.html', foods=foods)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
