@@ -116,6 +116,14 @@ def home():
     foods = Food.query.all()
     return render_template('home.html', foods=foods)
 
+@app.route('/filter_by_date', methods=['POST'])
+def filter_by_date():
+    filter_date = request.form['filter_date']
+    filter_hour = request.form['filter_hour']
+    filter_datetime = datetime.fromisoformat(filter_date + ' ' + filter_hour)
+    foods = Food.query.filter(db.func.extract('hour', Food.date_of_reception) == filter_datetime.hour).all()
+    return render_template('home.html', foods=foods)
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     logged = session.get('user_id')
