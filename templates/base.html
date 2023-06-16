@@ -31,6 +31,12 @@
           <li class="nav-item active">
             <a class="nav-link" href="{{ url_for('home') }}" style="color: white;">მთავარი</a>
           </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('about') }}" style="color: white;">პროექტის შესახებ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('add_food') }}" style="color: white;">საკვების დამატება</a>
+          </li>
           {% if 'username' in session %}
           <a class="nav-link" href="{{ url_for('logout') }}" style="color: white;">გასვლა</a>
           {% else %}

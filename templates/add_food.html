@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <style>
+    .form-container {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-container label {
+      font-weight: bold;
+    }
+    .form-container input[type="text"],
+    .form-container input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+    }
+    .form-container input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .form-container input[type="submit"]:hover {
+      background-color: #0069d9;
+    }
+  </style>
+  <div class="form-container" style="margin-top: 100px;">
+    <h2>საკვების დამატება</h2>
+    <form method="POST" action="{{ url_for('add_food') }}">
+      <div class="form-group">
+        <label for="name">საკვების დასახელება:</label>
+        <input type="text" id="name" name="name" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label for="category">კატეგორია:</label>
+        <input type="text" id="category" name="category" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label for="calorie">კალორიულობა:</label>
+        <input type="number" id="calorie" name="calorie" class="form-control" required>
+      </div>
+
+      <input type="submit" value="დამატება" class="btn btn-primary">
+    </form>
+  </div>
+
+{% endblock %}

@@ -69,6 +69,41 @@ def logout():
     flash('თქვენ გამოხვედით.', 'success')
     return redirect(url_for('home'))
 
+@app.route('/add_food', methods=['GET', 'POST'])
+def add_food():
+    if request.method == 'POST':
+        name = request.form['name']
+        category = request.form['category']
+        calorie = int(request.form['calorie'])
+        food = Food(name=name, category=category, calorie=calorie)
+        db.session.add(food)
+        db.session.commit()
+        flash('საკვების ინფორმაცია წარმატებით დაემატა!', 'success')
+        return redirect(url_for('home'))
+    return render_template('add_food.html')
+
+
+@app.route('/edit_food/<int:food_id>', methods=['GET', 'POST'])
+def edit_food(food_id):
+    food = Food.query.get_or_404(food_id)
+    if request.method == 'POST':
+        food.name = request.form['name']
+        food.category = request.form['category']
+        food.calorie = int(request.form['calorie'])
+        db.session.commit()
+        flash('საკვების ინფორმაცია განახლდა!', 'success')
+        return redirect(url_for('home'))
+    return render_template('edit_food.html', food=food)
+
+
+@app.route('/delete_food/<int:food_id>', methods=['GET'])
+def delete_food(food_id):
+    food = Food.query.get_or_404(food_id)
+    db.session.delete(food)
+    db.session.commit()
+    flash('საკვების ინფორმაცია ამოიშალა!', 'success')
+    return redirect(url_for('home'))
+
 if __name__ == '__main__':
     app.run(debug=True)
 
