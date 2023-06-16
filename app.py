@@ -14,6 +14,12 @@ api = Api(app)
 
 db = SQLAlchemy(app)
 
+class Food(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    category = db.Column(db.String(50), nullable=False)
+    calorie = db.Column(db.Integer, nullable=False)
+    date_of_reception = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,6 +27,89 @@ class User(db.Model):
     password = db.Column(db.String(100), nullable=False)
     last_login = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
+class FoodResource(Resource):
+    def get(self, food_id=None):
+        if food_id:
+            food = Food.query.get(food_id)
+            if food:
+                return {
+                    "id": food.id,
+                    "name": food.name,
+                    "category": food.category,
+                    "calorie": food.calorie,
+                }
+            else:
+                return {"message": "საკვების ინფორმაცია ვერ ვიპოვეთ"}, 404
+        else:
+            foods = Food.query.all()
+            result = [
+                {
+                    "id": food.id,
+                    "name": food.name,
+                    "category": food.category,
+                    "calorie": food.calorie,
+                }
+                for food in foods
+            ]
+            return result
+
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument("name", type=str, required=True, help="Name is required")
+        parser.add_argument(
+            "category", type=str, required=True, help="Category is required"
+        )
+        parser.add_argument(
+            "calorie", type=int, required=True, help="Calorie is required"
+        )
+        args = parser.parse_args()
+
+        name = args["name"]
+        category = args["category"]
+        calorie = args["calorie"]
+
+        food = Food(name=name, category=category, calorie=calorie)
+        db.session.add(food)
+        db.session.commit()
+
+        return {"message": "საკვების ინფორმაცია წარმატებით დაემატა"}, 201
+
+    def put(self, food_id):
+        parser = reqparse.RequestParser()
+        parser.add_argument("name", type=str, required=True, help="Name is required")
+        parser.add_argument(
+            "category", type=str, required=True, help="Category is required"
+        )
+        parser.add_argument(
+            "calorie", type=int, required=True, help="Calorie is required"
+        )
+        args = parser.parse_args()
+
+        name = args["name"]
+        category = args["category"]
+        calorie = args["calorie"]
+
+        food = Food.query.get(food_id)
+        if food:
+            food.name = name
+            food.category = category
+            food.calorie = calorie
+            db.session.commit()
+            return {"message": "საკვების ინფორმაცია წარმატებით შეიცვალა"}, 200
+        else:
+            return {"message": "საკვები არ არის ნაპოვნი"}, 404
+
+    def delete(self, food_id):
+        food = Food.query.get(food_id)
+        if food:
+            db.session.delete(food)
+            db.session.commit()
+            return {"message": "წარმატებით წაიშალა"}, 200
+        else:
+            return {"message": "საკვები არ არის ნაპოვნი"}, 404
+
+
+api.add_resource(FoodResource, "/api/food", "/api/food/<int:food_id>")
 
 @app.route('/')
 def home():
@@ -104,6 +193,11 @@ def delete_food(food_id):
     flash('საკვების ინფორმაცია ამოიშალა!', 'success')
     return redirect(url_for('home'))
 
+
+@app.route('/food/<int:food_id>', methods = ["GET"])
+def view_food(food_id):
+    food = Food.query.get_or_404(food_id)
+    return render_template('food.html', food=food)
 if __name__ == '__main__':
     app.run(debug=True)
 

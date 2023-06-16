@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <style>
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      font-family: Arial, sans-serif;
+    }
+    .about-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 40px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .about-container h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #007bff;
+    }
+    .about-container p {
+      font-size: 18px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .custom-styling {
+      font-weight: bold;
+      color: #dc3545;
+    }
+  </style>
+
+  <div class="about-container" style="margin-top: 100px;">
+    <h2>პროექტის შესახებ</h2>
+    <p>პროექტზე მუშაობდნენ: <b>თაკო ცარციძე, ანი კობერიძე, გუგა ჩავლეშვილი, ლევან ბედინაშვილი, დათო ამირანაშვილი (ჯგუფი #8)</b></p>
+    <p>ჩვენ შევქმენით diet აპლიკაცია, რომელსაც ექნება შემდეგი ფუნქციონალი: რეგისტრაცია/ავტორიზაცია, საკვების და კალორიულობის დამატება/რედაქტირება/წაშლა, API ნაწილი. პროექტი დაწერილია flask-ზე და იყენებს SQLAlchemy-ს.
+    </p>
+    <p class="custom-styling">მადლობა ყურადღებისათვის.</p>
+  </div>
+{% endblock %}
