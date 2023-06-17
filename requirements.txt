@@ -7,3 +7,4 @@ setuptools==65.5.1
 SQLAlchemy==2.0.15
 gunicorn
 WTForms~=3.0.1
+flask_restful
