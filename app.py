@@ -2,7 +2,6 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, date
-from flask_restful import Api, Resource, reqparse
 
 app = Flask(__name__)
 app.secret_key = 'diet'
