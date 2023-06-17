@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .login-container {
+      max-width: 400px;
+      margin: 0 auto;
+      margin-top: 100px;
+      padding: 20px;
+      background-color: #f5f5f5;
+      border: 1px solid #ced4da; /* Border style */
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+    }
+  </style>
+  <div class="container" style="margin-top: 100px;">
+    <div class="login-container">
+      <h2 style="text-align: center;">გაიარეთ ავტორიზაცია</h2>
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        <form action="{{ url_for('login') }}" method="POST">
+        <div class="form-group">
+          <label for="username">ანგარიშის სახელი:</label>
+          <input type="text" class="form-control" id="username" name="username" placeholder="შეიყვანეთ თქვენი სახელი:">
+        </div>
+        <div class="form-group">
+          <label for="password">ანგარიშის პაროლი:</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="შეიყვანეთ თქვენი პაროლი">
+        </div>
+        <p>არ გაქვთ ანგარიში? <a href="{{ url_for('register') }}">რეგისტრაცია</a></p>
+        <button type="submit" class="btn btn-success btn-block">ავტორიზაცია</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
