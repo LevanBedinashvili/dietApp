@@ -206,6 +206,12 @@ def delete_food(food_id):
 def view_food(food_id):
     food = Food.query.get_or_404(food_id)
     return render_template('food.html', food=food)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 

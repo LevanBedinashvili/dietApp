@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 style="margin-top: 100px; text-align: center;">საკვების სია</h1>
+
+<table class="table table-striped" style="width: 90%; margin-left: 100px;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>სახელი</th>
+            <th>კატეგორია</th>
+            <th>კალორია</th>
+            <th>მიღების თარიღი</th>
+        </tr>
+    </thead>
+    <tbody>
+
+            <tr>
+                <td>{{food.id}}</td>
+                <td>{{ food.name }}</td>
+                <td>{{ food.category }}</td>
+                <td>{{ food.calorie }}</td>
+                <td>{{ food.date_of_reception }}</td>
+            </tr>
+    </tbody>
+</table>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
