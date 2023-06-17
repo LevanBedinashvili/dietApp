@@ -114,7 +114,10 @@ api.add_resource(FoodResource, "/api/food", "/api/food/<int:food_id>")
 @app.route('/')
 def home():
     foods = Food.query.all()
-    return render_template('home.html', foods=foods)
+    amount_of_calories = 0
+    for i in foods:
+        amount_of_calories += i.calorie
+    return render_template('home.html', foods=foods, amount_of_calories=amount_of_calories)
 
 @app.route('/filter_by_date', methods=['POST'])
 def filter_by_date():
